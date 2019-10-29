@@ -74,12 +74,14 @@ class WaterFlow {
   void setCalibrationFactor(int index, double calibration_factor);
   double getCalibrationFactor(int index);
 
-  void setMaxMilliliter(int index, long max_Milliliter);
+  void setMaxMilliliter(int index, unsigned long max_Milliliter);
   unsigned long getMaxMilliliter(int index);
 
-  void setMaxMillisecond(int index, long max_milliseconds);
+  void setMaxMillisecond(int index, unsigned long max_milliseconds);
   unsigned long getMaxMillisecond(int index);
   unsigned long getMilliliter(int index);
+
+  void setStartTime(int index, unsigned long start_time = millis());
 
   bool isTimeOut(int index);
 };

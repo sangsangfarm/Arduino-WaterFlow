@@ -188,13 +188,13 @@ double WaterFlow::getCalibrationFactor(int index) {
   return _water_flows[index].calibration_factor;
 }
 /**
- * @fn void WaterFlow::setMaxMilliliter(int index, long max_milliliter)
+ * @fn void WaterFlow::setMaxMilliliter(int index, unsigned long max_milliliter)
  * @brief Set specific water flow sensor's max milliliter
  * @param index water flow sensor index
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-void WaterFlow::setMaxMilliliter(int index, long max_milliliter) {
+void WaterFlow::setMaxMilliliter(int index, unsigned long max_milliliter) {
   _water_flows[index].max_milliliter = max_milliliter;
 }
 /**
@@ -209,13 +209,14 @@ unsigned long WaterFlow::getMaxMilliliter(int index) {
   return _water_flows[index].max_milliliter;
 }
 /**
- * @fn void WaterFlow::setMaxMillisecond(int index, long max_milliseconds)
+ * @fn void WaterFlow::setMaxMillisecond(int index, unsigned long
+ * max_milliseconds)
  * @brief Set specific water flow sensor's max seconds
  * @param index water flow sensor index
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-void WaterFlow::setMaxMillisecond(int index, long max_milliseconds) {
+void WaterFlow::setMaxMillisecond(int index, unsigned long max_milliseconds) {
   _water_flows[index].max_milliseconds = max_milliseconds;
 }
 
@@ -251,7 +252,6 @@ unsigned long WaterFlow::getMilliliter(int index) {
  * @date 2019-10-29
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-
 bool WaterFlow::isTimeOut(int index) {
   if (_water_flows[index].start_time != 0 &&
       millis() - _water_flows[index].start_time >=
@@ -260,4 +260,16 @@ bool WaterFlow::isTimeOut(int index) {
   } else {
     return false;
   }
+}
+
+/**
+ * @fn void WaterFlow::setStartTime(int index, unsigned long start_time)
+ * @brief Set specific water flow sensor's start time
+ * @param index water flow sensor index
+ * @param start_time water flow start time
+ * @date 2019-10-29
+ * @author Janghun Lee (jhlee@sangsang.farm)
+ */
+void WaterFlow::setStartTime(int index, unsigned long start_time) {
+  _water_flows[index].start_time = start_time;
 }
