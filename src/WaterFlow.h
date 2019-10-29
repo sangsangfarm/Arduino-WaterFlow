@@ -14,8 +14,8 @@ extern "C" {
 #include <esp_timer.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+#include <sys/time.h>
 }
-#include <Arduino.h>
 #include <EEPROM.h>
 
 #define EEPROM_SIZE 4096

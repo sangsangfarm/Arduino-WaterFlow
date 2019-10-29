@@ -253,7 +253,7 @@ long WaterFlow::getMillliter(int index) {
  */
 
 bool WaterFlow::isTimeOut(int index) {
-  if (mills() - _water_flows[index].start_time >=
+  if (millis() - _water_flows[index].start_time >=
       _water_flows[index].max_milliseconds) {
     return true;
   } else {
