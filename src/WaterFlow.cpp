@@ -198,14 +198,14 @@ void WaterFlow::setMaxMillliter(int index, long max_millliter) {
   _water_flows[index].max_millliter = max_millliter;
 }
 /**
- * @fn long WaterFlow::getMaxMillliter(int index)
+ * @fn unsigned long WaterFlow::getMaxMillliter(int index)
  * @brief Get specific water flow sensor's max millliter
  * @param index water flow sensor index
  * @return water flow sensor's max millliter
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-long WaterFlow::getMaxMillliter(int index) {
+unsigned long WaterFlow::getMaxMillliter(int index) {
   return _water_flows[index].max_millliter;
 }
 /**
@@ -220,26 +220,26 @@ void WaterFlow::setMaxMillisecond(int index, long max_milliseconds) {
 }
 
 /**
- * @fn long WaterFlow::getMaxMillisecond(int index)
+ * @fn unsigned long WaterFlow::getMaxMillisecond(int index)
  * @brief Get specific water flow sensor's max seconds
  * @param index water flow sensor index
  * @return water flow sensor's max seconds
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-long WaterFlow::getMaxMillisecond(int index) {
+unsigned long WaterFlow::getMaxMillisecond(int index) {
   return _water_flows[index].max_milliseconds;
 }
 
 /**
- * @fn long WaterFlow::getMillliter(int index)
+ * @fn unsigned long WaterFlow::getMillliter(int index)
  * @brief Get specific water flow sensor's millliter
  * @param index water flow sensor index
  * @return water flow sensor's millliter
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-long WaterFlow::getMillliter(int index) {
+unsigned long WaterFlow::getMillliter(int index) {
   return _water_flows[index].millliter;
 }
 
