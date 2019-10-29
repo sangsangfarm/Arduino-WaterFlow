@@ -30,9 +30,9 @@ typedef struct WaterFlowBaseInfo {
   /** Water flow calibration factor */
   double calibration_factor;
   /** The maximum amount of water  */
-  long max_millliter;
+  unsigned long max_millliter;
   /** The maximum watering time */
-  long max_seconds;
+  unsigned long max_milliseconds;
 } WaterFlowBaseInfo;
 /**
  * @struct WaterFlowInfo
@@ -44,9 +44,11 @@ typedef struct WaterFlowInfo : WaterFlowBaseInfo {
   /** GPIO pin number */
   uint8_t pin;
   /** Water flow sensor pulse */
-  long pulse;
+  unsigned long pulse;
   /** The amount of water flow  */
-  long millliter;
+  unsigned long millliter;
+  /** The Time that the water starts to flow.  */
+  unsigned long start_time;
 } WaterFlowInfo;
 
 class WaterFlow {
@@ -75,10 +77,12 @@ class WaterFlow {
   void setMaxMillliter(int index, long max_millliter);
   long getMaxMillliter(int index);
 
-  void setMaxSeconds(int index, long max_seconds);
-  long getMaxSeconds(int index);
+  void setMaxMillisecond(int index, long max_milliseconds);
+  long getMaxMillisecond(int index);
 
   long getMillliter(int index);
+
+  bool isTimeOut(int index);
 };
 
 #endif /** WATER_FLOW_H_ */

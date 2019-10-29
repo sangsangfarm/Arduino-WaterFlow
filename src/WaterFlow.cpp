@@ -35,7 +35,8 @@ WaterFlow::WaterFlow(uint8_t pins[], size_t water_flow_num,
     _water_flows[i].pulse = _water_flows[i].millliter = 0;
     _water_flows[i].calibration_factor = 7.5;
     _water_flows[i].max_millliter = 1000;
-    _water_flows[i].max_seconds = 10;
+    _water_flows[i].max_milliseconds = 10;
+    _water_flows[i].start_time = 0;
   }
 
   // Set these GPIO pins to input mode and when GPIO pin is Low to High, it
@@ -104,7 +105,7 @@ void WaterFlow::loadData(void) {
     EEPROM.get(_eeprom_address + i * sizeof(WaterFlowBaseInfo), info);
     _water_flows[i].calibration_factor = info.calibration_factor;
     _water_flows[i].max_millliter = info.max_millliter;
-    _water_flows[i].max_seconds = info.max_seconds;
+    _water_flows[i].max_milliseconds = info.max_milliseconds;
   }
   EEPROM.end();
 }
@@ -122,7 +123,7 @@ void WaterFlow::saveData(void) {
   for (int i = 0; i < _water_flow_num; i++) {
     info.calibration_factor = _water_flows[i].calibration_factor;
     info.max_millliter = _water_flows[i].max_millliter;
-    info.max_seconds = _water_flows[i].max_seconds;
+    info.max_milliseconds = _water_flows[i].max_milliseconds;
 
     EEPROM.put(_eeprom_address + i * sizeof(WaterFlowBaseInfo), info);
     EEPROM.commit();
@@ -140,6 +141,9 @@ void WaterFlow::flow(void* arg) {
   int index;
   for (;;) {
     if (xQueueReceive(_event_queue, &index, portMAX_DELAY)) {
+      if (_water_flows[index].start_time == 0) {
+        _water_flows[index].start_time = millis();
+      }
       _water_flows[index].pulse++;
       _water_flows[index].millliter =
           (_water_flows[index].pulse * 1000 /
@@ -157,6 +161,7 @@ void WaterFlow::flow(void* arg) {
  */
 void WaterFlow::reset(int index) {
   _water_flows[index].pulse = _water_flows[index].millliter = 0;
+  _water_flows[index].start_time = 0;
 }
 
 /**
@@ -204,26 +209,26 @@ long WaterFlow::getMaxMillliter(int index) {
   return _water_flows[index].max_millliter;
 }
 /**
- * @fn void WaterFlow::setMaxSeconds(int index, long max_seconds)
+ * @fn void WaterFlow::setMaxMillisecond(int index, long max_milliseconds)
  * @brief Set specific water flow sensor's max seconds
  * @param index water flow sensor index
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-void WaterFlow::setMaxSeconds(int index, long max_seconds) {
-  _water_flows[index].max_seconds = max_seconds;
+void WaterFlow::setMaxMillisecond(int index, long max_milliseconds) {
+  _water_flows[index].max_milliseconds = max_milliseconds;
 }
 
 /**
- * @fn long WaterFlow::getMaxSeconds(int index)
+ * @fn long WaterFlow::getMaxMillisecond(int index)
  * @brief Get specific water flow sensor's max seconds
  * @param index water flow sensor index
  * @return water flow sensor's max seconds
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-long WaterFlow::getMaxSeconds(int index) {
-  return _water_flows[index].max_seconds;
+long WaterFlow::getMaxMillisecond(int index) {
+  return _water_flows[index].max_milliseconds;
 }
 
 /**
@@ -236,4 +241,22 @@ long WaterFlow::getMaxSeconds(int index) {
  */
 long WaterFlow::getMillliter(int index) {
   return _water_flows[index].millliter;
+}
+
+/**
+ * @fn bool WaterFlow::isTimeOut(int index)
+ * @brief Check watering timeout in selected water flow sensor.
+ * @param index water flow sensor index
+ * @return Time-out status
+ * @date 2019-10-29
+ * @author Janghun Lee (jhlee@sangsang.farm)
+ */
+
+bool WaterFlow::isTimeOut(int index) {
+  if (mills() - _water_flows[index].start_time >=
+      _water_flows[index].max_milliseconds) {
+    return true;
+  } else {
+    return false;
+  }
 }
