@@ -18,8 +18,8 @@ void setup() {
   Waterflow water_flow = Waterflow(pin, 2);
   water_flow.setCalibrationFactor(0, 4.5);
   water_flow.setCalibrationFactor(1, 7.5);
-  water_flow.setMaxMillliter(1, 50);
-  water_flow.setMaxMillliter(1, 100);
+  water_flow.setMaxMilliliter(1, 50);
+  water_flow.setMaxMilliliter(1, 100);
   water_flow.setMaxSeconds(1, 60);
   water_flow.getMaxSeconds(1, 30);
 
@@ -30,7 +30,7 @@ void setup() {
   water_flow.saveDate();
 }
 void loop() {
-  long liter_1 = water_flow.getMillliter(0) / 1000;
-  long liter_2 = water_flow.getMillliter(0) / 1000;
+  long liter_1 = water_flow.getMilliliter(0) / 1000;
+  long liter_2 = water_flow.getMilliliter(0) / 1000;
 }
 ```

@@ -32,9 +32,9 @@ WaterFlow::WaterFlow(uint8_t pins[], size_t water_flow_num,
     // bit masking for setting GPIO pin;
     pin_bit_mask |= (1ULL << pins[i]);
     _water_flows[i].pin = pins[i];
-    _water_flows[i].pulse = _water_flows[i].millliter = 0;
+    _water_flows[i].pulse = _water_flows[i].milliliter = 0;
     _water_flows[i].calibration_factor = 7.5;
-    _water_flows[i].max_millliter = 1000;
+    _water_flows[i].max_milliliter = 1000;
     _water_flows[i].max_milliseconds = 10;
     _water_flows[i].start_time = 0;
   }
@@ -104,7 +104,7 @@ void WaterFlow::loadData(void) {
   for (int i = 0; i < _water_flow_num; i++) {
     EEPROM.get(_eeprom_address + i * sizeof(WaterFlowBaseInfo), info);
     _water_flows[i].calibration_factor = info.calibration_factor;
-    _water_flows[i].max_millliter = info.max_millliter;
+    _water_flows[i].max_milliliter = info.max_milliliter;
     _water_flows[i].max_milliseconds = info.max_milliseconds;
   }
   EEPROM.end();
@@ -122,7 +122,7 @@ void WaterFlow::saveData(void) {
   EEPROM.begin(EEPROM_SIZE);
   for (int i = 0; i < _water_flow_num; i++) {
     info.calibration_factor = _water_flows[i].calibration_factor;
-    info.max_millliter = _water_flows[i].max_millliter;
+    info.max_milliliter = _water_flows[i].max_milliliter;
     info.max_milliseconds = _water_flows[i].max_milliseconds;
 
     EEPROM.put(_eeprom_address + i * sizeof(WaterFlowBaseInfo), info);
@@ -145,7 +145,7 @@ void WaterFlow::flow(void* arg) {
         _water_flows[index].start_time = millis();
       }
       _water_flows[index].pulse++;
-      _water_flows[index].millliter =
+      _water_flows[index].milliliter =
           (_water_flows[index].pulse * 1000 /
            (60 * _water_flows[index].calibration_factor));
     }
@@ -154,13 +154,13 @@ void WaterFlow::flow(void* arg) {
 
 /**
  * @fn void WaterFlow::reset(int index)
- * @brief Reset specific water flow sensor's pulse and millliter
+ * @brief Reset specific water flow sensor's pulse and milliliter
  * @param index water flow sensor index
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
 void WaterFlow::reset(int index) {
-  _water_flows[index].pulse = _water_flows[index].millliter = 0;
+  _water_flows[index].pulse = _water_flows[index].milliliter = 0;
   _water_flows[index].start_time = 0;
 }
 
@@ -188,25 +188,25 @@ double WaterFlow::getCalibrationFactor(int index) {
   return _water_flows[index].calibration_factor;
 }
 /**
- * @fn void WaterFlow::setMaxMillliter(int index, long max_millliter)
- * @brief Set specific water flow sensor's max millliter
+ * @fn void WaterFlow::setMaxMilliliter(int index, long max_milliliter)
+ * @brief Set specific water flow sensor's max milliliter
  * @param index water flow sensor index
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-void WaterFlow::setMaxMillliter(int index, long max_millliter) {
-  _water_flows[index].max_millliter = max_millliter;
+void WaterFlow::setMaxMilliliter(int index, long max_milliliter) {
+  _water_flows[index].max_milliliter = max_milliliter;
 }
 /**
- * @fn unsigned long WaterFlow::getMaxMillliter(int index)
- * @brief Get specific water flow sensor's max millliter
+ * @fn unsigned long WaterFlow::getMaxMilliliter(int index)
+ * @brief Get specific water flow sensor's max milliliter
  * @param index water flow sensor index
- * @return water flow sensor's max millliter
+ * @return water flow sensor's max milliliter
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-unsigned long WaterFlow::getMaxMillliter(int index) {
-  return _water_flows[index].max_millliter;
+unsigned long WaterFlow::getMaxMilliliter(int index) {
+  return _water_flows[index].max_milliliter;
 }
 /**
  * @fn void WaterFlow::setMaxMillisecond(int index, long max_milliseconds)
@@ -232,15 +232,15 @@ unsigned long WaterFlow::getMaxMillisecond(int index) {
 }
 
 /**
- * @fn unsigned long WaterFlow::getMillliter(int index)
- * @brief Get specific water flow sensor's millliter
+ * @fn unsigned long WaterFlow::getMilliliter(int index)
+ * @brief Get specific water flow sensor's milliliter
  * @param index water flow sensor index
- * @return water flow sensor's millliter
+ * @return water flow sensor's milliliter
  * @date 2019-10-25
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-unsigned long WaterFlow::getMillliter(int index) {
-  return _water_flows[index].millliter;
+unsigned long WaterFlow::getMilliliter(int index) {
+  return _water_flows[index].milliliter;
 }
 
 /**

@@ -30,7 +30,7 @@ typedef struct WaterFlowBaseInfo {
   /** Water flow calibration factor */
   double calibration_factor;
   /** The maximum amount of water  */
-  unsigned long max_millliter;
+  unsigned long max_milliliter;
   /** The maximum watering time */
   unsigned long max_milliseconds;
 } WaterFlowBaseInfo;
@@ -46,7 +46,7 @@ typedef struct WaterFlowInfo : WaterFlowBaseInfo {
   /** Water flow sensor pulse */
   unsigned long pulse;
   /** The amount of water flow  */
-  unsigned long millliter;
+  unsigned long milliliter;
   /** The Time that the water starts to flow.  */
   unsigned long start_time;
 } WaterFlowInfo;
@@ -74,13 +74,12 @@ class WaterFlow {
   void setCalibrationFactor(int index, double calibration_factor);
   double getCalibrationFactor(int index);
 
-  void setMaxMillliter(int index, long max_millliter);
-  unsigned long getMaxMillliter(int index);
+  void setMaxMilliliter(int index, long max_Milliliter);
+  unsigned long getMaxMilliliter(int index);
 
   void setMaxMillisecond(int index, long max_milliseconds);
   unsigned long getMaxMillisecond(int index);
-
-  unsigned long getMillliter(int index);
+  unsigned long getMilliliter(int index);
 
   bool isTimeOut(int index);
 };
