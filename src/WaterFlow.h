@@ -60,6 +60,7 @@ class WaterFlow {
 
   static void flow(void* arg);
   static void IRAM_ATTR isr_handler(void* arg);
+  unsigned long getMillis();
 
  public:
   WaterFlow(uint8_t pins[], size_t water_flow_num,
@@ -81,7 +82,7 @@ class WaterFlow {
   unsigned long getMaxMillisecond(int index);
   unsigned long getMilliliter(int index);
 
-  void setStartTime(int index, unsigned long start_time = millis());
+  void setStartTime(int index);
 
   bool isTimeOut(int index);
 };

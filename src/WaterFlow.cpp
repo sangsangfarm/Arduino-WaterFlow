@@ -142,7 +142,7 @@ void WaterFlow::flow(void* arg) {
   for (;;) {
     if (xQueueReceive(_event_queue, &index, portMAX_DELAY)) {
       if (_water_flows[index].start_time == 0) {
-        _water_flows[index].start_time = millis();
+        _water_flows[index].start_time = getMillis();
       }
       _water_flows[index].pulse++;
       _water_flows[index].milliliter =
@@ -254,7 +254,7 @@ unsigned long WaterFlow::getMilliliter(int index) {
  */
 bool WaterFlow::isTimeOut(int index) {
   if (_water_flows[index].start_time != 0 &&
-      millis() - _water_flows[index].start_time >=
+      getMillis() - _water_flows[index].start_time >=
           _water_flows[index].max_milliseconds) {
     return true;
   } else {
@@ -263,13 +263,20 @@ bool WaterFlow::isTimeOut(int index) {
 }
 
 /**
- * @fn void WaterFlow::setStartTime(int index, unsigned long start_time)
+ * @fn void WaterFlow::setStartTime(int index)
  * @brief Set specific water flow sensor's start time
  * @param index water flow sensor index
- * @param start_time water flow start time
- * @date 2019-10-29
+ * @date 2019-10-30
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-void WaterFlow::setStartTime(int index, unsigned long start_time) {
-  _water_flows[index].start_time = start_time;
+void WaterFlow::setStartTime(int index) {
+  _water_flows[index].start_time = getMillis();
+}
+
+unsigned long WaterFlow::getMillis() {
+  struct timeval now;
+  unsigned long millis;
+  gettimeofday(&now, NULL);
+  millis = now.tv_sec * 1000 + now.tv_usec / 1000;
+  return millis;
 }
