@@ -60,7 +60,6 @@ class WaterFlow {
 
   static void flow(void* arg);
   static void IRAM_ATTR isr_handler(void* arg);
-  unsigned long getMillis();
 
  public:
   WaterFlow(uint8_t pins[], size_t water_flow_num,

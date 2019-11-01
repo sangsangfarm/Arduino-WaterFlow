@@ -7,6 +7,8 @@
 
 #include <WaterFlow.h>
 
+unsigned long getMillis(void);
+
 /** Water flow info */
 static WaterFlowInfo* _water_flows = NULL;
 /** ISR queue */
@@ -272,8 +274,13 @@ bool WaterFlow::isTimeOut(int index) {
 void WaterFlow::setStartTime(int index) {
   _water_flows[index].start_time = getMillis();
 }
-
-unsigned long WaterFlow::getMillis() {
+/**
+ * @fn unsigned long getMillis(void)
+ * @brief Get milliseconds
+ * @date 2019-10-30
+ * @author Janghun Lee (jhlee@sangsang.farm)
+ */
+unsigned long getMillis(void) {
   struct timeval now;
   unsigned long millis;
   gettimeofday(&now, NULL);
