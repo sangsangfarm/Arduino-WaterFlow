@@ -48,7 +48,7 @@ typedef struct WaterFlowInfo : WaterFlowBaseInfo {
   /** The amount of water flow  */
   unsigned long milliliter;
   /** The Time that the water starts to flow.  */
-  unsigned long start_time;
+  uint64_t start_time;
 } WaterFlowInfo;
 
 class WaterFlow {

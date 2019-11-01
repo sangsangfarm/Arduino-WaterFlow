@@ -7,7 +7,7 @@
 
 #include <WaterFlow.h>
 
-unsigned long getMillis(void);
+uint64_t getMillis(void);
 
 /** Water flow info */
 static WaterFlowInfo* _water_flows = NULL;
@@ -275,15 +275,16 @@ void WaterFlow::setStartTime(int index) {
   _water_flows[index].start_time = getMillis();
 }
 /**
- * @fn unsigned long getMillis(void)
+ * @fn uint64_t getMillis(void)
  * @brief Get milliseconds
  * @date 2019-10-30
  * @author Janghun Lee (jhlee@sangsang.farm)
  */
-unsigned long getMillis(void) {
+uint64_t getMillis(void) {
   struct timeval now;
-  unsigned long millis;
+  uint64_t millis;
   gettimeofday(&now, NULL);
-  millis = now.tv_sec * 1000 + now.tv_usec / 1000;
+  millis = (uint64_t)now.tv_sec * (uint64_t)1000 +
+           (uint64_t)now.tv_usec / (uint64_t)1000;
   return millis;
 }
