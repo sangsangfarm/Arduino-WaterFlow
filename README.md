@@ -23,11 +23,6 @@ void setup() {
   water_flow.setMaxSeconds(1, 60);
   water_flow.getMaxSeconds(1, 30);
 
-  // If you want to use EEPROM
-  water_flow.setEEPROMAddress(10);
-  water_flow.loadData();
-  ...
-  water_flow.saveDate();
 }
 void loop() {
   long liter_1 = water_flow.getMilliliter(0) / 1000;
