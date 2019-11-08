@@ -84,55 +84,6 @@ void IRAM_ATTR WaterFlow::isr_handler(void* arg) {
 }
 
 /**
- * @fn void WaterFlow::setEEPROMAddress(int eeprom_address)
- * @brief Set EEPROM address
- * @param eeprom_address EEPROM address
- * @date 2019-10-25
- * @author Janghun Lee (jhlee@sangsang.farm)
- */
-void WaterFlow::setEEPROMAddress(int eeprom_address) {
-  _eeprom_address = eeprom_address;
-}
-
-/**
- * @fn void WaterFlow::loadData(void)
- * @brief Load water flow base info data from EEPROM
- * @date 2019-10-25
- * @author Janghun Lee (jhlee@sangsang.farm)
- */
-void WaterFlow::loadData(void) {
-  WaterFlowBaseInfo info;
-  EEPROM.begin(EEPROM_SIZE);
-  for (int i = 0; i < _water_flow_num; i++) {
-    EEPROM.get(_eeprom_address + i * sizeof(WaterFlowBaseInfo), info);
-    _water_flows[i].calibration_factor = info.calibration_factor;
-    _water_flows[i].max_milliliter = info.max_milliliter;
-    _water_flows[i].max_milliseconds = info.max_milliseconds;
-  }
-  EEPROM.end();
-}
-
-/**
- * @fn void WaterFlow::saveData(void)
- * @brief Save water flow base info data from EEPROM
- * @date 2019-10-25
- * @author Janghun Lee (jhlee@sangsang.farm)
- */
-void WaterFlow::saveData(void) {
-  WaterFlowBaseInfo info;
-
-  EEPROM.begin(EEPROM_SIZE);
-  for (int i = 0; i < _water_flow_num; i++) {
-    info.calibration_factor = _water_flows[i].calibration_factor;
-    info.max_milliliter = _water_flows[i].max_milliliter;
-    info.max_milliseconds = _water_flows[i].max_milliseconds;
-
-    EEPROM.put(_eeprom_address + i * sizeof(WaterFlowBaseInfo), info);
-    EEPROM.commit();
-  }
-  EEPROM.end();
-}
-/**
  * @fn void WaterFlow::flow(void* arg)
  * @brief Get signal from water flow sensor
  * @param arg pointer that received from xTaskCreate

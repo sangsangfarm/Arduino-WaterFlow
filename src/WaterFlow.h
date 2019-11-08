@@ -67,10 +67,6 @@ class WaterFlow {
   ~WaterFlow();
   void reset(int index);
 
-  void setEEPROMAddress(int eeprom_address);
-  void loadData(void);
-  void saveData(void);
-
   void setCalibrationFactor(int index, double calibration_factor);
   double getCalibrationFactor(int index);
 
